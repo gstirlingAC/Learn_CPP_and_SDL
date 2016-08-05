@@ -11,12 +11,12 @@ public:
 	~Game() {} // deconstructor
 
 	// simply set the running variable to true
-	void init() { m_bRunning = true; }
+	bool init(const char* title, int xpos, int ypos, int width, int height, int flags);
 
-	void render() {}
-	void update() {}
-	void handleEvents() {}
-	void clean() {}
+	void render();
+	void update();
+	void handleEvents();
+	void clean();
 
 	bool running() { return m_bRunning; }
 

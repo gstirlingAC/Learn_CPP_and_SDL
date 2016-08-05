@@ -2,7 +2,7 @@
 
 Game* g_game = 0;
 
-int main()
+int main(int argc, char* args[])
 {
 	g_game = new Game();
 
