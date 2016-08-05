@@ -11,7 +11,7 @@ public:
 	~Game() {} // deconstructor
 
 	// simply set the running variable to true
-	bool init(const char* title, int xpos, int ypos, int width, int height, int flags);
+	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
 
 	void render();
 	void update();

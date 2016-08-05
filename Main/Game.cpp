@@ -1,8 +1,15 @@
 #include<iostream> // import this module to allow us to use console window features such as outputting to the console
 #include "Game.h"
 
-bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
+bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen)
 {
+	int flags = 0;
+
+	if (fullScreen)
+	{
+		flags = SDL_WINDOW_FULLSCREEN;
+	}
+
 	// attempt to initialise SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
