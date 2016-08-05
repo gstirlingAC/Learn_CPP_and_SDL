@@ -1,24 +1,21 @@
 #include "Game.h"
 
-void init() {}
-void render() {}
-void update() {}
-void handleEvents() {}
-void clean() {}
-
-bool g_bRunning = true;
+Game* g_game = 0;
 
 int main()
 {
-	init();
+	g_game = new Game();
 
-	while (g_bRunning)
+	g_game->init("Tutorial 4: The Game Class", 100, 100, 640, 480, 0);
+
+	while (g_game->running())
 	{
-		handleEvents();
-		update();
-		render();
+		g_game->handleEvents();
+		g_game->update();
+		g_game->render();
 	}
 
-	clean();
+	g_game->clean();
 
+	return 0;
 }
