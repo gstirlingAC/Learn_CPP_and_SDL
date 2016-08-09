@@ -26,7 +26,6 @@ private:
 	SDL_Renderer* pRenderer;
 
 	int currentFrame;
-	TextureManager textureManager;
 
 	bool bRunning;
 };
