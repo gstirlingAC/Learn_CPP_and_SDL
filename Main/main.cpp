@@ -1,21 +1,21 @@
 #include "Game.h"
 
-Game* g_game = 0;
+Game* game = 0;
 
 int main(int argc, char* args[])
 {
-	g_game = new Game();
+	game = new Game();
 
-	g_game->init("Tutorial 5: Fullscreen SDL", 100, 100, 640, 480, false);
+	game->init("Tutorial 5: Fullscreen SDL", 100, 100, 640, 480, false);
 
-	while (g_game->running())
+	while (game->running())
 	{
-		g_game->handleEvents();
-		g_game->update();
-		g_game->render();
+		game->handleEvents();
+		game->update();
+		game->render();
 	}
 
-	g_game->clean();
+	game->clean();
 
 	return 0;
 }

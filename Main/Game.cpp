@@ -16,17 +16,17 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		std::cout << "SDL init success\n";
 
 		// init the window
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+		pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 
-		if (m_pWindow != 0) // window init success
+		if (pWindow != 0) // window init success
 		{
 			std::cout << "window creation success";
-			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
+			pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 
-			if (m_pRenderer != 0) // renderer init success
+			if (pRenderer != 0) // renderer init success
 			{
 				std::cout << "renderer creation success\n";
-				SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+				SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255);
 			}
 			else
 			{
@@ -47,39 +47,33 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	std::cout << "init success\n";
-	m_bRunning = true; // everything inited successfully
+	bRunning = true; // everything inited successfully
 
-	SDL_Surface* pTempSurface = IMG_Load("Assets/animate-alpha.png");
+	textureManager.load("Assets/animate-alpha.png", "animate", pRenderer);
 	printf("IMG_Load: %s\n", IMG_GetError());
-	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-	SDL_FreeSurface(pTempSurface);
-	
-	m_destinationRectangle.x = m_sourceRectangle.x = 0;
-	m_destinationRectangle.y = m_sourceRectangle.y = 0;
-	m_destinationRectangle.w = m_sourceRectangle.w = 128;
-	m_destinationRectangle.h = m_sourceRectangle.h = 82;
 
 	return true;
 }
 
 void Game::render()
 {
-	SDL_RenderClear(m_pRenderer); // clear the renderer to the draw colour
-	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
-	SDL_RenderPresent(m_pRenderer); // draw to the screen
+	SDL_RenderClear(pRenderer); // clear the renderer to the draw colour
+	textureManager.draw("animate", 0, 0, 128, 82, pRenderer);
+	textureManager.drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, pRenderer);
+	SDL_RenderPresent(pRenderer); // draw to the screen
 }
 
 void Game::update()
 {
-	int fps = 128 * int((SDL_GetTicks() / 100) % 6);
-	m_sourceRectangle.x = fps;
+	int fps = int((SDL_GetTicks() / 100) % 6);
+	currentFrame = fps;
 }
 
 void Game::clean()
 {
 	std::cout << "cleaning game\n";
-	SDL_DestroyWindow(m_pWindow);
-	SDL_DestroyRenderer(m_pRenderer);
+	SDL_DestroyWindow(pWindow);
+	SDL_DestroyRenderer(pRenderer);
 	SDL_Quit();
 }
 
@@ -92,7 +86,7 @@ void Game::handleEvents()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			m_bRunning = false;
+			bRunning = false;
 			break;
 
 		default:

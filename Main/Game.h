@@ -1,8 +1,7 @@
 #ifndef __Game__
 #define __Game__
 
-#include<SDL2\SDL.h>
-#include<SDL2\SDL_image.h>
+#include "TextureManager.h"
 
 class Game
 {
@@ -19,18 +18,17 @@ public:
 	void handleEvents();
 	void clean();
 
-	bool running() { return m_bRunning; }
+	bool running() { return bRunning; }
 
 private:
 
-	SDL_Window* m_pWindow;
-	SDL_Renderer* m_pRenderer;
+	SDL_Window* pWindow;
+	SDL_Renderer* pRenderer;
 
-	SDL_Texture* m_pTexture; // the new SDL_Texture variable
-	SDL_Rect m_sourceRectangle; // the first rectangle
-	SDL_Rect m_destinationRectangle; // the second rectangle
+	int currentFrame;
+	TextureManager textureManager;
 
-	bool m_bRunning;
+	bool bRunning;
 };
 
 #endif /* defined(__Game__) */
