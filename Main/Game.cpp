@@ -55,21 +55,24 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		return false;
 	}
 
+	go.load(100, 100, 128, 82, "animate");
+	player.load(300, 300, 128, 82, "animate");
+
 	return true;
 }
 
 void Game::render()
 {
 	SDL_RenderClear(pRenderer); // clear the renderer to the draw colour
-	TheTextureManager::pInstance()->draw("animate", 0, 0, 128, 82, pRenderer);
-	TheTextureManager::pInstance()->drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, pRenderer);
+	go.draw(pRenderer);
+	player.draw(pRenderer);
 	SDL_RenderPresent(pRenderer); // draw to the screen
 }
 
 void Game::update()
 {
-	int fps = int((SDL_GetTicks() / 100) % 6);
-	currentFrame = fps;
+	go.update();
+	player.update();
 }
 
 void Game::clean()

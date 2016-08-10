@@ -2,6 +2,7 @@
 #define __Game__
 
 #include "TextureManager.h"
+#include "Player.h"
 
 class Game
 {
@@ -9,6 +10,9 @@ public:
 
 	Game() {} // constructor
 	~Game() {} // deconstructor
+
+	GameObject go;
+	Player player;
 
 	// simply set the running variable to true
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
