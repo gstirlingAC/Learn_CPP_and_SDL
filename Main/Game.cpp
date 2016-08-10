@@ -55,8 +55,17 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		return false;
 	}
 
-	go.load(100, 100, 128, 82, "animate");
-	player.load(300, 300, 128, 82, "animate");
+	go = new GameObject();
+	player = new Player();
+	enemy = new Enemy();
+
+	go->load(100, 100, 128, 82, "animate");
+	player->load(300, 300, 128, 82, "animate");
+	enemy->load(0, 0, 128, 82, "animate");
+
+	gameObjects.push_back(go);
+	gameObjects.push_back(player);
+	gameObjects.push_back(enemy);
 
 	return true;
 }
@@ -64,15 +73,23 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 void Game::render()
 {
 	SDL_RenderClear(pRenderer); // clear the renderer to the draw colour
-	go.draw(pRenderer);
-	player.draw(pRenderer);
+
+	// loop through our objects and draw them
+	for (std::vector<GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+	{
+		gameObjects[i]->draw(pRenderer);
+	}
+
 	SDL_RenderPresent(pRenderer); // draw to the screen
 }
 
 void Game::update()
 {
-	go.update();
-	player.update();
+	// loop through and update our objects
+	for (std::vector<GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+	{
+		gameObjects[i]->update();
+	}
 }
 
 void Game::clean()
