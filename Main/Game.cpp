@@ -57,20 +57,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		return false;
 	}
 
-	/*
-	go = new GameObject();
-	player = new Player();
-	enemy = new Enemy();
-
-	go->load(100, 100, 128, 82, "animate");
-	player->load(300, 300, 128, 82, "animate");
-	enemy->load(0, 0, 128, 82, "animate");
-
-	gameObjects.push_back(go);
-	gameObjects.push_back(player);
-	gameObjects.push_back(enemy);
-	*/
-
 	gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
 	gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
