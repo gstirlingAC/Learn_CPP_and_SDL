@@ -11,15 +11,15 @@ class TextureManager
 public:
 	~TextureManager() {};
 
-	static TextureManager* pInstance()
+	static TextureManager* Instance()
 	{
-		if (instance == 0)
+		if (pInstance == 0)
 		{
-			instance = new TextureManager();
-			return instance;
+			pInstance = new TextureManager();
+			return pInstance;
 		}
 
-		return instance;
+		return pInstance;
 	}
 
 	bool load(std::string fileName, std::string id, SDL_Renderer* pRenderer);
@@ -33,7 +33,7 @@ public:
 private:
 	TextureManager() {};
 
-	static TextureManager* instance;
+	static TextureManager* pInstance;
 
 	std::map<std::string, SDL_Texture*> textureMap;
 };

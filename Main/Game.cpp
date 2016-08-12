@@ -1,6 +1,8 @@
 #include<iostream> // import this module to allow us to use console window features such as outputting to the console
 #include "Game.h"
 
+Game* Game::pInstance = 0;
+
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen)
 {
 	int flags = 0;
@@ -50,11 +52,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	bRunning = true; // everything inited successfully
 	
 	// to load
-	if (!TheTextureManager::pInstance()->load("Assets/animate-alpha.png", "animate", pRenderer))
+	if (!TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", pRenderer))
 	{
 		return false;
 	}
 
+	/*
 	go = new GameObject();
 	player = new Player();
 	enemy = new Enemy();
@@ -66,6 +69,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	gameObjects.push_back(go);
 	gameObjects.push_back(player);
 	gameObjects.push_back(enemy);
+	*/
+
+	gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
+	gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
 	return true;
 }
@@ -75,9 +82,9 @@ void Game::render()
 	SDL_RenderClear(pRenderer); // clear the renderer to the draw colour
 
 	// loop through our objects and draw them
-	for (std::vector<GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+	for (std::vector<SDLGameObject*>::size_type i = 0; i != gameObjects.size(); i++)
 	{
-		gameObjects[i]->draw(pRenderer);
+		gameObjects[i]->draw();
 	}
 
 	SDL_RenderPresent(pRenderer); // draw to the screen
@@ -86,9 +93,10 @@ void Game::render()
 void Game::update()
 {
 	// loop through and update our objects
-	for (std::vector<GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+	for (std::vector<SDLGameObject*>::size_type i = 0; i != gameObjects.size(); i++)
 	{
 		gameObjects[i]->update();
+		std::cout << gameObjects.size() << std::endl;
 	}
 }
 

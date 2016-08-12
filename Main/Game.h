@@ -9,11 +9,19 @@
 class Game
 {
 public:
+	static Game* Instance()
+	{
+		if (pInstance == 0)
+		{
+			pInstance = new Game();
+			return pInstance;
+		}
 
-	Game() {} // constructor
-	~Game() {} // deconstructor
+		return pInstance;
+	}
 
-	// simply set the running variable to true
+	SDL_Renderer* getRenderer() const { return pRenderer; }
+
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen);
 
 	void render();
@@ -24,19 +32,20 @@ public:
 	bool running() { return bRunning; }
 
 private:
+	Game() {} // constructor
+
+	static Game* pInstance;
 
 	SDL_Window* pWindow;
 	SDL_Renderer* pRenderer;
 
-	GameObject* go;
-	GameObject* player;
-	GameObject* enemy;
-
-	std::vector<GameObject*> gameObjects;
+	std::vector<SDLGameObject*> gameObjects;
 
 	int currentFrame;
 
 	bool bRunning;
 };
+
+typedef Game TheGame;
 
 #endif /* defined(__Game__) */
